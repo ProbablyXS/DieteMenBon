@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="DieteMenBon.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="defaultOrangeBackColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">231, 149, 86</Value>
+    </Setting>
+    <Setting Name="defaultGreenBackColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">167, 207, 73</Value>
+    </Setting>
+    <Setting Name="defaultIndiaRedBackColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">IndianRed</Value>
+    </Setting>
+    <Setting Name="selectedIndiaBackColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">198, 80, 90</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
