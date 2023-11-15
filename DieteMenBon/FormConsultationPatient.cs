@@ -588,6 +588,9 @@ namespace DieteMenBon
 
         private void button12_Click(object sender, EventArgs e)
         {
+            DATABASE.RefreshAllPatients(FormMesPatients.dataGridView1, FormMesPatients.label21);
+            DATABASE.GetTotalMoneyCountForMonthAndYear(FormMesPatients.label3, FormMesPatients.label4);
+
             Close();
         }
 
@@ -660,12 +663,12 @@ namespace DieteMenBon
             var YEAR = Convert.ToDateTime(dataGridView2.Rows[0].Cells[1].Value).ToString("yyyy");
             var DAYS = Convert.ToDateTime(dataGridView2.Rows[0].Cells[1].Value).ToString("dd");
 
-            List<double> POIDS = new List<double>();
-            List<double> TAILLE = new List<double>();
-            List<double> VENTRE = new List<double>();
-            List<double> HANCHE = new List<double>();
-            List<double> CUISSE = new List<double>();
-            List<double> BRAS = new List<double>();
+            List<decimal> POIDS = new List<decimal>();
+            List<decimal> TAILLE = new List<decimal>();
+            List<decimal> VENTRE = new List<decimal>();
+            List<decimal> HANCHE = new List<decimal>();
+            List<decimal> CUISSE = new List<decimal>();
+            List<decimal> BRAS = new List<decimal>();
             POIDS.Add(0);
             TAILLE.Add(0);
             VENTRE.Add(0);
@@ -677,20 +680,20 @@ namespace DieteMenBon
             foreach (DataGridViewRow row in dataGridView2.Rows)
             {
                 //var Month = Convert.ToDateTime(row.Cells[1].Value).ToString("MM").TrimStart().Trim();
-                POIDS.Add((double)row.Cells[2].Value);
-                TAILLE.Add((double)row.Cells[3].Value);
-                VENTRE.Add((double)row.Cells[4].Value);
-                HANCHE.Add((double)row.Cells[5].Value);
-                CUISSE.Add((double)row.Cells[6].Value);
-                BRAS.Add((double)row.Cells[7].Value);
+                POIDS.Add((decimal)row.Cells[2].Value);
+                TAILLE.Add((decimal)row.Cells[3].Value);
+                VENTRE.Add((decimal)row.Cells[4].Value);
+                HANCHE.Add((decimal)row.Cells[5].Value);
+                CUISSE.Add((decimal)row.Cells[6].Value);
+                BRAS.Add((decimal)row.Cells[7].Value);
             }
 
-            series.Add(new LineSeries() { Title = "POIDS [kg]", Values = new ChartValues<double>(POIDS) });
-            series.Add(new LineSeries() { Title = "TAILLE [cm]", Values = new ChartValues<double>(TAILLE) });
-            series.Add(new LineSeries() { Title = "VENTRE [cm]", Values = new ChartValues<double>(VENTRE) });
-            series.Add(new LineSeries() { Title = "HANCHE [cm]", Values = new ChartValues<double>(HANCHE) });
-            series.Add(new LineSeries() { Title = "CUISSE [cm]", Values = new ChartValues<double>(CUISSE) });
-            series.Add(new LineSeries() { Title = "BRAS [cm]", Values = new ChartValues<double>(BRAS) });
+            series.Add(new LineSeries() { Title = "POIDS [kg]", Values = new ChartValues<decimal>(POIDS), LineSmoothness = 0 });
+            series.Add(new LineSeries() { Title = "TAILLE [cm]", Values = new ChartValues<decimal>(TAILLE), LineSmoothness = 0 });
+            series.Add(new LineSeries() { Title = "VENTRE [cm]", Values = new ChartValues<decimal>(VENTRE), LineSmoothness = 0 });
+            series.Add(new LineSeries() { Title = "HANCHE [cm]", Values = new ChartValues<decimal>(HANCHE), LineSmoothness = 0 });
+            series.Add(new LineSeries() { Title = "CUISSE [cm]", Values = new ChartValues<decimal>(CUISSE), LineSmoothness = 0 });
+            series.Add(new LineSeries() { Title = "BRAS [cm]", Values = new ChartValues<decimal>(BRAS), LineSmoothness = 0 });
             cartesianChart1.Series = series;
         }
     }

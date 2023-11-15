@@ -12,7 +12,7 @@ namespace DieteMenBon.assets
 {
     class DATABASE
     {
-        public static MySqlConnection dbConnect = new MySqlConnection("server=127.0.0.1; uid=; pwd=;database=DieteMenBon;charset=utf8;");
+        public static MySqlConnection dbConnect = new MySqlConnection("server=127.0.0.1; uid=root; pwd=;database=DieteMenBon;charset=utf8;");
         public static MySqlCommand command;
         public static MySqlDataReader reader;
         public static MySqlDataAdapter data;
@@ -55,7 +55,12 @@ namespace DieteMenBon.assets
 
                     if (cell.Value.ToString().Contains("'"))
                     {
-                        row.Cells[cell.ColumnIndex].Value = cell.Value.ToString().Replace("'", " ");
+                        row1.Cells[cell.ColumnIndex].Value = cell.Value.ToString().Replace("'", " ");
+                    }
+
+                    if (cell.Value.ToString().Contains(","))
+                    {
+                        row1.Cells[cell.ColumnIndex].Value = cell.Value.ToString().Replace(",", ".");
                     }
                 }
             }
@@ -280,7 +285,7 @@ namespace DieteMenBon.assets
             //MONTH
             try
             {
-                double amount = 0;
+                decimal amount = 0;
 
                 command = new MySqlCommand("SELECT * FROM consultation WHERE MONTH(Consultation_Date) = " + month + " AND YEAR(Consultation_Date) = " + year, dbConnect);
                 data = new MySqlDataAdapter(command);
@@ -289,7 +294,7 @@ namespace DieteMenBon.assets
 
                 foreach (DataRow row in dt.Rows)
                 {
-                    amount += +row.Field<double>("Price"); //PRIX
+                    amount += +row.Field<decimal>("Price"); //PRIX
                 }
 
                 if (labelCountMonth.Text != amount + "€".ToString())
@@ -302,7 +307,7 @@ namespace DieteMenBon.assets
             //YEAR
             try
             {
-                double amount = 0;
+                decimal amount = 0;
 
                 command = new MySqlCommand("SELECT * FROM consultation WHERE YEAR(Consultation_Date) = " + year, dbConnect);
                 data = new MySqlDataAdapter(command);
@@ -311,7 +316,7 @@ namespace DieteMenBon.assets
 
                 foreach (DataRow row in dt.Rows)
                 {
-                    amount += +row.Field<double>("Price"); //PRIX
+                    amount += +row.Field<decimal>("Price"); //PRIX
                 }
 
                 if (labelCountYear.Text != amount + "€".ToString())
@@ -404,7 +409,7 @@ namespace DieteMenBon.assets
         {
             try
             {
-                double prixCount = 0;
+                decimal prixCount = 0;
 
                 sender.Rows.Clear();
 
@@ -419,7 +424,7 @@ namespace DieteMenBon.assets
                 {
                     sender.Rows.Add(row.Field<int>("Consultation_Id"),
                        row.Field<DateTime>("Consultation_Date").ToString("dd/MM/yyyy"),
-                       row.Field<double>("Price"),
+                       row.Field<decimal>("Price"),
                        row.Field<string>("Payment_Means"),
                        row.Field<string>("Consultation_Comment"),
                        row.Field<string>("Food_plan_Change"),
@@ -427,7 +432,7 @@ namespace DieteMenBon.assets
                        row.Field<string>("Solicitation"),
                        row.Field<string>("Weekly_Goals"));
 
-                    prixCount += +row.Field<double>("Price");
+                    prixCount += +row.Field<decimal>("Price");
 
                     sender.Tag = Convert.ToString(row.Field<int>("Patient_Id")); //ADD TAG ID
                 }
@@ -457,17 +462,17 @@ namespace DieteMenBon.assets
                 {
                     sender.Rows.Add(row.Field<int>("Consultation_Id"),
                        row.Field<DateTime>("Consultation_Date").ToString("dd/MM/yyyy"),
-                       row.Field<double>("Poids"),
-                       row.Field<double>("Taille"),
-                       row.Field<double>("Ventre"),
-                       row.Field<double>("Hanche"),
-                       row.Field<double>("Cuisse"),
-                       row.Field<double>("Bras"),
-                       row.Field<double>("IMC"),
-                       row.Field<double>("Muscle"),
-                       row.Field<double>("Hydratation"),
-                       row.Field<double>("Graisse_Viscerale"),
-                       row.Field<double>("Graisse_Sous_Cutanee"));
+                       row.Field<decimal>("Poids"),
+                       row.Field<decimal>("Taille"),
+                       row.Field<decimal>("Ventre"),
+                       row.Field<decimal>("Hanche"),
+                       row.Field<decimal>("Cuisse"),
+                       row.Field<decimal>("Bras"),
+                       row.Field<decimal>("IMC"),
+                       row.Field<decimal>("Muscle"),
+                       row.Field<decimal>("Hydratation"),
+                       row.Field<decimal>("Graisse_Viscerale"),
+                       row.Field<decimal>("Graisse_Sous_Cutanee"));
 
                     sender.Tag = Convert.ToString(row.Field<int>("Patient_Id")); //ADD TAG ID
                 }
@@ -515,7 +520,7 @@ namespace DieteMenBon.assets
                 command = new MySqlCommand("update consultation set " +
 "Consultation_Id='" + Convert.ToInt32(NewConsultationId) +
 "', Consultation_Date='" + Convert.ToDateTime(ConsultationDate).ToString("yyyy/MM/dd") +
-"', Price='" + Convert.ToDouble(Price) + "', Payment_Means='" + Payment_Means +
+"', Price='" + Convert.ToString(Price) + "', Payment_Means='" + Payment_Means +
 "', Consultation_Comment='" + @Consultation_Comment + "', Food_plan_Change='" + @Food_plan_Change +
 "', Giving_Document='" + @Giving_Document + "', Solicitation='" + @Solicitation +
 "', Weekly_Goals='" + @Weekly_Goals + "' where Patient_Id='" + Convert.ToInt32(Id) + "'" +

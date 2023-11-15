@@ -240,12 +240,12 @@ namespace DieteMenBon.assets
             catch { }
         }
 
-        public static async Task ChangeNumber(Label LabelValue, double NewValue)
+        public static async Task ChangeNumber(Label LabelValue, decimal NewValue)
         {
             try
             {
-                double val = Convert.ToDouble(LabelValue.Text.Replace("€", ""));
-                double speed = Convert.ToDouble(Math.Abs(NewValue / 60).ToString("0.000"));
+                decimal val = Convert.ToDecimal(LabelValue.Text.Replace("€", ""));
+                decimal speed = Convert.ToDecimal(Math.Abs(NewValue / 60).ToString("0.000"));
 
                 if (val > 0)
                 {
@@ -275,7 +275,7 @@ namespace DieteMenBon.assets
                 }
 
                 await Task.Delay(10);
-                LabelValue.Text = Math.Round(val).ToString() + "€";
+                LabelValue.Text = NewValue + "€";
             }
             catch { }
         }
