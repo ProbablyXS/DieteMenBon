@@ -5,6 +5,7 @@ using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Windows.Forms;
 using SeriesCollection = LiveCharts.SeriesCollection;
@@ -549,10 +550,19 @@ namespace DieteMenBon
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            e.Graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            e.Graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
+            e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+
             //Bitmap bmp = new Bitmap(Width, Height);
             //DrawToBitmap(bmp, new Rectangle(0, 0, Width, Height));
             //bmp.Save("Test.bmp");
-
+            Bitmap bmp = new Bitmap(cartesianChart1.Width, cartesianChart1.Height);
+            cartesianChart1.DrawToBitmap(bmp, new Rectangle(0, 0, bmp.Width, bmp.Height));
+            bmp.Save("C:\\graph.png", ImageFormat.Png);
             //Bitmap image = new Bitmap(bmp);
             //e.Graphics.DrawString("welcome to test", new Font("Arial", 12, FontStyle.Regular), Brushes.Black, new Point(10, 10));
 
@@ -564,9 +574,13 @@ namespace DieteMenBon
 
                 e.Graphics.DrawString(row.Cells[2].Value.ToString(), new Font("Arial", 12, FontStyle.Regular), Brushes.Black, new Point(ptsX, ptsY));
 
-                ptsX += 100;
+                //ptsX += 100;
                 ptsY += 100;
             }
+
+            //draw graphic chart
+            e.Graphics.DrawImage(bmp, 0, ptsY);
+
             //e.Graphics.DrawImage(image, 0, 0);
         }
 
