@@ -706,12 +706,12 @@ Address, Postal_Address, City, Job, Doctor, Referencing,
 
             command.Parameters.AddWithValue("@Patient_Id", Convert.ToInt32(Patient_Id.Text));
             command.Parameters.AddWithValue("@History", DateTime.Now.Date);
-            command.Parameters.AddWithValue("@Perso_Last_Name", Last_Name.Text);
-            command.Parameters.AddWithValue("@Perso_First_Name", First_Name.Text);
+            command.Parameters.AddWithValue("@Perso_Last_Name", Last_Name.Text.Trim());
+            command.Parameters.AddWithValue("@Perso_First_Name", First_Name.Text.Trim());
             command.Parameters.AddWithValue("@Perso_Gender", Gender.Text);
             command.Parameters.AddWithValue("@Perso_Date_Of_Birth", Naissance.Value);
             command.Parameters.AddWithValue("@Perso_Age", Age.Text);
-            command.Parameters.AddWithValue("@Perso_Place_Of_Birth", Place_Of_Birth.Text);
+            command.Parameters.AddWithValue("@Perso_Place_Of_Birth", Place_Of_Birth.Text.Trim());
             command.Parameters.AddWithValue("@Perso_Height", Height.Text);
             command.Parameters.AddWithValue("@Perso_Phone", Phone.Text);
             command.Parameters.AddWithValue("@Perso_Email", Email.Text);
